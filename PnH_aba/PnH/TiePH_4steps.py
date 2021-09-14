@@ -299,8 +299,12 @@ class RunModel:
             mdb.models['Model-'+str(self.iteration)].ExplicitDynamicsStep(name='Rotating1', previous='Initial', 
                 timePeriod=self.step1Time, improvedDtMethod=ON)
             for i in range(1,self.tot_rot):
-                mdb.models['Model-'+str(self.iteration)].ExplicitDynamicsStep(name=('Rotating'+str(i+1)), previous=('Rotating'+str(i)), 
-                    timePeriod=self.step1Time, improvedDtMethod=ON)
+                if i <= 2:
+                    mdb.models['Model-'+str(self.iteration)].ExplicitDynamicsStep(name=('Rotating'+str(i+1)), previous=('Rotating'+str(i)), 
+                        timePeriod=self.step1Time/3, improvedDtMethod=ON)
+                else:
+                    mdb.models['Model-'+str(self.iteration)].ExplicitDynamicsStep(name=('Rotating'+str(i+1)), previous=('Rotating'+str(i)), 
+                        timePeriod=self.step1Time/2, improvedDtMethod=ON)
             mdb.models['Model-'+str(self.iteration)].ExplicitDynamicsStep(name='Inserting', previous=('Rotating'+str(self.tot_rot)), 
                 timePeriod=self.step2Time, improvedDtMethod=ON)
         else:
